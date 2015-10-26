@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360A08E91BDEE9E10039451E /* cameraRollAccess.gif in Resources */ = {isa = PBXBuildFile; fileRef = 360A08E81BDEE9E10039451E /* cameraRollAccess.gif */; settings = {ASSET_TAGS = (); }; };
 		36B19B941BDE2AD100DD35A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B19B931BDE2AD100DD35A9 /* AppDelegate.swift */; };
 		36B19B961BDE2AD100DD35A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B19B951BDE2AD100DD35A9 /* ViewController.swift */; };
 		36B19B991BDE2AD100DD35A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36B19B971BDE2AD100DD35A9 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		360A08E81BDEE9E10039451E /* cameraRollAccess.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cameraRollAccess.gif; sourceTree = "<group>"; };
 		36B19B901BDE2AD100DD35A9 /* CameraRollAccess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CameraRollAccess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36B19B931BDE2AD100DD35A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36B19B951BDE2AD100DD35A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		360A08EA1BDEE9F10039451E /* image */ = {
+			isa = PBXGroup;
+			children = (
+				360A08E81BDEE9E10039451E /* cameraRollAccess.gif */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
 		36B19B871BDE2AD100DD35A9 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 				36B19B9A1BDE2AD100DD35A9 /* Assets.xcassets */,
 				36B19B9C1BDE2AD100DD35A9 /* LaunchScreen.storyboard */,
 				36B19B9F1BDE2AD100DD35A9 /* Info.plist */,
+				360A08EA1BDEE9F10039451E /* image */,
 			);
 			path = CameraRollAccess;
 			sourceTree = "<group>";
@@ -228,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				360A08E91BDEE9E10039451E /* cameraRollAccess.gif in Resources */,
 				36B19B9E1BDE2AD100DD35A9 /* LaunchScreen.storyboard in Resources */,
 				36B19B9B1BDE2AD100DD35A9 /* Assets.xcassets in Resources */,
 				36B19B991BDE2AD100DD35A9 /* Main.storyboard in Resources */,
@@ -481,6 +493,7 @@
 				36B19BBA1BDE2AD100DD35A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36B19BBB1BDE2AD100DD35A9 /* Build configuration list for PBXNativeTarget "CameraRollAccessTests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +502,7 @@
 				36B19BBD1BDE2AD100DD35A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36B19BBE1BDE2AD100DD35A9 /* Build configuration list for PBXNativeTarget "CameraRollAccessUITests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +511,7 @@
 				36B19BC01BDE2AD100DD35A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
