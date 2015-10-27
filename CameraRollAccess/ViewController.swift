@@ -15,6 +15,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //contentModeを設定
+        // http://anthrgrnwrld.hatenablog.com/entry/2015/10/17/123659 参照
+        //.ScaleAspectFit
+        //.ScaleAspectFill
+        //.ScaleToFill
+        imageFromCameraRoll.contentMode = .ScaleAspectFit
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,12 +65,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             //そしてそれを宣言済みのimageViewへ放り込む
             imageFromCameraRoll.image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
 
-            //contentModeを設定
-            // http://anthrgrnwrld.hatenablog.com/entry/2015/10/17/123659 参照
-            //.ScaleAspectFit
-            //.ScaleAspectFill
-            //.ScaleToFill
-            imageFromCameraRoll.contentMode = .ScaleAspectFit
 
         }
         
