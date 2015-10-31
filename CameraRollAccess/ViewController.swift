@@ -13,7 +13,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageFromCameraRoll: UIImageView!        //写真表示用のUIImageView
     @IBOutlet weak var effectSegControl: UISegmentedControl!    //Effect選択用SegControl
     
-    private var effectView : UIVisualEffectView!                //Effect用View
+    private var effectView : UIVisualEffectView?                //Effect用View
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,22 +38,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     */
     func pickImageFromLibrary() {
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
-            
-            //写真ライブラリ(カメラロール)表示用のViewControllerを宣言しているという理解
-            let controller = UIImagePickerController()
-            
-            //おまじないという認識で今は良いと思う
-            controller.delegate = self
-            
-            //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
-            //以下はカメラロールの例
-            //.Cameraを指定した場合はカメラを呼び出し(シミュレーター不可)
-            controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            
-            //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
-            self.presentViewController(controller, animated: true, completion: nil)
+        guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) else {
+            return
         }
+        
+        //写真ライブラリ(カメラロール)表示用のViewControllerを宣言しているという理解
+        let controller = UIImagePickerController()
+        
+        //おまじないという認識で今は良いと思う
+        controller.delegate = self
+        
+        //新しく宣言したViewControllerでカメラとカメラロールのどちらを表示するかを指定
+        //以下はカメラロールの例
+        //.Cameraを指定した場合はカメラを呼び出し(シミュレーター不可)
+        controller.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        
+        //新たに追加したカメラロール表示ViewControllerをpresentViewControllerにする
+        self.presentViewController(controller, animated: true, completion: nil)
     }
     
     /**
@@ -63,19 +64,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     :param: didFinishPickingMediaWithInfo:おまじないという認識で今は良いと思う
     */
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo: [String: AnyObject]) {
-        
-        //このif条件はおまじないという認識で今は良いと思う
-        if didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] != nil {
-            
-            //didFinishPickingMediaWithInfo通して渡された情報(選択された画像情報が入っている？)をUIImageにCastする
-            //そしてそれを宣言済みのimageViewへ放り込む
-            imageFromCameraRoll.image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
-
-
+        defer {
+            //写真選択後にカメラロール表示ViewControllerを引っ込める動作
+            picker.dismissViewControllerAnimated(true, completion: nil)
         }
         
-        //写真選択後にカメラロール表示ViewControllerを引っ込める動作
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        //didFinishPickingMediaWithInfo通して渡された情報(選択された画像情報が入っている？)をUIImageにCastする
+        guard let originalImage = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage else {
+            return
+        }
+        
+        //そしてそれを宣言済みのimageViewへ放り込む
+        imageFromCameraRoll.image = originalImage
     }
 
     /**
@@ -90,19 +90,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     /*
     エフェクトを適用する.
     */
-    internal func addVirtualEffectView(effect : UIBlurEffect!){
+    internal func addVirtualEffectView(effect : UIBlurEffect?){
         
-        if effectView != nil {
-            effectView.removeFromSuperview()
+        effectView?.removeFromSuperview()
+        effectView = nil
+        
+        guard let ef = effect else {
+            return
         }
         
         // Blurエフェクトを適用するEffectViewを作成.
-        effectView = UIVisualEffectView(effect: effect)
-        effectView.frame = CGRectMake(0, 0, 360, 200)
-        effectView.center = imageFromCameraRoll.center
-        effectView.layer.masksToBounds = true
-        effectView.layer.cornerRadius = 20.0
-        imageFromCameraRoll.addSubview(effectView)
+        effectView = UIVisualEffectView(effect: ef)
+        guard let ev = effectView else {
+            return
+        }
+        
+        ev.frame = CGRectMake(0, 0, 360, 200)
+        ev.center = imageFromCameraRoll.center
+        ev.layer.masksToBounds = true
+        ev.layer.cornerRadius = 20.0
+        imageFromCameraRoll.addSubview(ev)
     }
     
     /*
@@ -111,31 +118,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     :param: effectIndex:effect用Index
     */
     func onClickMySegmentedControl(effectIndex: Int){
-        
-        var effect : UIBlurEffect!
-        
-        switch effectIndex {
-            
-        case 0:
-            print("No effect")
-            
-        case 1:
-            // LightなBlurエフェクトを作る.
-            effect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-            
-        case 2:
-            // ExtraLightなBlurエフェクトを作る.
-            effect = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
-            
-            
-        case 3:
-            // DarkなBlurエフェクトを作る.
-            effect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
-            
-        default:
-            print("Error")
-        }
-        
+        let styles : [UIBlurEffectStyle?] = [nil, .Light, .ExtraLight, .Dark]
+        let style = styles[effectIndex]
+        let effect = style.map{ UIBlurEffect(style: $0) }
         self.addVirtualEffectView(effect)
     }
 
